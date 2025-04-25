@@ -1,6 +1,6 @@
 const express = require("express");
-const { registerDriver , loginDriver,getDriverDetails} = require("../controllers/driverController");
-
+const { registerDriver , loginDriver,getMyProfile,addVehicle,getMyVehicles } = require("../controllers/driverController");
+const verifyToken = require("../middlewares/verifyToken");
 const router = express.Router();
 
 
@@ -10,7 +10,12 @@ router.post("/register", registerDriver);
 // Driver login 
 router.post("/login", loginDriver);
 
-// Get driver details by ID
-router.get("/:id", getDriverDetails);
+
+
+router.get("/profile/me", verifyToken, getMyProfile);
+
+router.post('/vehicle/add', verifyToken, addVehicle);
+
+router.get('/vehicle/my-vehicles', verifyToken, getMyVehicles);
 
 module.exports = router;
